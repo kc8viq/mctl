@@ -1,17 +1,16 @@
 #!/usr/bin/env ruby
 
 trap("INT") do 
+    puts "SIGINT received. Use SIGTERM instead.\n"
+end
+
+trap("TERM") do 
     pid = spawn("echo /stop > command_input")
     Process.detach(pid)
     puts "Waiting for server #{$server_pid} to stop"
     Process.wait($server_pid)
-    exit 0
-end
-
-trap("TERM") do 
-    STDERR.puts "Caught TERM signal"
-    Process.kill("TERM", $server_pid)
-    Process.wait($server_pid)
+    Process.kill("KILL", $fork_pid)
+    Process.wait($fork_pid)
     exit 0
 end
 
@@ -24,7 +23,7 @@ end
 puts "mctl started with PID #{$$}"
 
 # Fork a process so as to keep the FIFO open and prevent blocking Java
-Process.fork do
+$fork_pid = Process.fork do
 	File.open("command_input", "w")
 	sleep
 end
