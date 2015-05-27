@@ -9,8 +9,6 @@ trap("TERM") do
     Process.detach(pid)
     puts "Waiting for server #{$server_pid} to stop"
     Process.wait($server_pid)
-    Process.kill("KILL", $fork_pid)
-    Process.wait($fork_pid)
     exit 0
 end
 
@@ -23,7 +21,7 @@ end
 puts "mctl started with PID #{$$}"
 
 # Fork a process so as to keep the FIFO open and prevent blocking Java
-$fork_pid = Process.fork do
+thr = Thread.new do
 	File.open("command_input", "w")
 	sleep
 end
