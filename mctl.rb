@@ -17,7 +17,7 @@ end
 trap("USR1") do 
     pid = spawn("echo /save-all > command_input")
     Process.detach(pid)
-	STDERR.puts "Acted on USR1 signal"
+	puts "Sent /save-all command"
 end
 
 puts "mctl started with PID #{$$}"
