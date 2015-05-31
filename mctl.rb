@@ -20,7 +20,7 @@ end
 
 puts "mctl started with PID #{$$}"
 
-# Fork a process so as to keep the FIFO open and prevent blocking Java
+# Use a thread to keep the FIFO open and prevent blocking stdin for Java process
 thr = Thread.new do
 	File.open("command_input", "w")
 	sleep
