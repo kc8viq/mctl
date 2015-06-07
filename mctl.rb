@@ -22,6 +22,7 @@ puts "mctl started with PID #{$$}"
 
 # Use a thread to keep the FIFO open and prevent blocking stdin for Java process
 thr = Thread.new do
+	exec("mkfifo command_input") unless File.exists?('command_input')
 	File.open("command_input", "w")
 	sleep
 end
