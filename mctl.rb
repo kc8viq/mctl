@@ -19,10 +19,15 @@ trap("USR1") do
 end
 
 puts "mctl started with PID #{$$}"
+unless File.exists?('command_input')
+	puts "command fifo missing"
+	spawn("mkfifo", "command_input")
+	Process.wait
+	puts "created command fifo"
+end
 
 # Use a thread to keep the FIFO open and prevent blocking stdin for Java process
 thr = Thread.new do
-	exec("mkfifo command_input") unless File.exists?('command_input')
 	File.open("command_input", "w")
 	sleep
 end
