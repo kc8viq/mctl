@@ -33,7 +33,8 @@ thr = Thread.new do
 end
 
 # Now we can spawn the server process without holding anything up
-$server_pid = spawn("java", "-Xmx1024M", "-Xms512M", "-jar", "server.jar", "nogui", :in=>"command_input", [:out, :err]=>"/dev/null")
+# $server_pid = spawn("java", "-Xmx1024M", "-Xms512M", "-jar", "server.jar", "nogui", :in=>"command_input", [:out, :err]=>"/dev/null")
+$server_pid = spawn("java", "-Xmx1024M", "-Xms512M", "-jar", "server.jar", "nogui")
 puts "server started with PID #{$server_pid}"
 
 # And now we wait for signals
