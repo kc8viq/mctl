@@ -1,5 +1,5 @@
 FROM java
-MAINTAINER Mark Howell <markallenhowell@gmail.com>
+MAINTAINER kc8viq <markallenhowell@gmail.com>
 RUN apt-get update
 RUN apt-get -y install ruby
 RUN mkdir /minecraft
