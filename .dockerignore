@@ -2,4 +2,5 @@
 *.properties
 world
 logs
-
+.git
+.gitignore
